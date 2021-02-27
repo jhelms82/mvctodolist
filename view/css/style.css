@@ -1,0 +1,141 @@
+/* the styles for the html elements */
+html {
+    background-color: black;
+}
+
+.heading {
+    text-align: center;
+}
+body {
+    margin-top: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 760px;
+    margin: 0 auto;
+    background-color: white;
+    border: 1px solid black;
+    padding: .5em 2em;
+}
+header {
+    margin: 0;
+    border-bottom: 2px solid black;
+}
+header h1 {
+    margin: 0;
+    padding: .5em 0;
+    color: black;
+}
+main {
+    margin: 0;
+}
+aside {
+    float: left;
+    width: 150px;
+}
+nav ul {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+nav ul li {
+    padding-bottom: 0.5em;
+}
+section {
+    float: left;
+    width: 500px;
+    padding-bottom: 1.5em;
+}
+footer {
+    clear: both;
+    margin-top: 1em;
+    border-top: 2px solid black;
+}
+footer p {
+    text-align: right;
+    font-size: 80%;
+    margin: 1em 0;
+}
+h1 {
+    font-size: 150%;
+    margin: 0;
+    padding: .5em 0 .25em;
+}
+h2 {
+    font-size: 120%;
+    margin: 0;
+    padding: .25em 0 .5em;
+}
+heading {
+    width: 50%;
+    margin: 3px auto;
+    text-align: center;
+    color: #6B8E23;
+    background: #FFF8DC;
+    border: 2px solid #688E23;
+    border-radius: 20px;
+}
+
+form {
+    width: 50%;
+    margin: 30px auto;
+    border-radius: 5px;
+    padding: 10px;
+    background: #FFF8DC;
+    border: 1px solid #6B8E23;
+}
+
+.task_input {
+    width: 73%;
+    height:15px;
+    padding:10px;
+    border: 2px solid #6B8E23;
+}
+
+.add_btn {
+    height: 39px;
+    background: #FFF8DC;
+    color: #6B8E23;
+    border: 2px solid #6B8E23;
+    border-radius: 5px;
+    padding: 5px 20px;
+}
+
+table {
+    width: 50%;
+    margin: 30px auto;
+    border-collapse: collapse;
+}
+
+tr {
+    border-bottom: 1px solid #cbcbcb;
+}
+
+th {
+    font-size: 19px;
+    color: #6B8E23;
+}
+
+th, td {
+    border: none;
+    height: 30px;
+    padding: 2px;
+}
+
+tr:hover {
+    background: #E9E9E9;
+}
+
+.task {
+    text-align: left;
+}
+
+.delete {
+    text-align: center;
+}
+
+.delete a {
+    color: white;
+    background: #a52a2a;
+    padding: 1px 6px;
+    border-radius: 3px;
+    text-decoration: none;
+}

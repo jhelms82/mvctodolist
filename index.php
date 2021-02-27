@@ -1,104 +1,82 @@
 <?php
-
-require_once('database.php');
-
-//Errors
-$errors = "";
+require('model/database.php');
+require('model/item_db.php');
+require('model/category_db.php');
 
 
 
-//connect to the DB
-$db = mysqli_connect('localhost', 'root', 'sesame', 'todolist');
 
+$category_name = filter_input(INPUT_POST, "category_name", FILTER_SANITIZE_STRING);
+$description = filter_input(INPUT_POST, "description", FILTER_SANITIZE_STRING);
+$item_id =filter_input(INPUT_POST, 'item_id', FILTER_VALIDATE_INT);
+//$items = filter_input(INPUT_POST, "title", FILTER_SANITIZE_STRING);
 
-//Submit Task to DB
-if(isset($_POST['submit'])){
-    $todoitem = $_POST['Title'];
-    $description = $_POST['Description'];
-    if (empty($todoitem)) {
-        $errors = "You must fill in fields";
-    }else { 
-        mysqli_query($db, "INSERT INTO todoitems (Title, Description) VALUES ('$todoitem', '$description')");
-        header('location: index.php');
+$category_id = filter_input(INPUT_POST, 'category_id', FILTER_VALIDATE_INT);
+if($category_id) {
+    $category_id = filter_input(INPUT_GET, 'category_id', FILTER_VALIDATE_INT);
+}
+
+//Action will allow take us different routes in controller
+$action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING);
+if (!$action) {
+    $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
+    if (!$action) {
+        $action = 'list_items';
     }
 }
 
+//switch statement
+
+switch ($action) {
+    case 'list_items':
+        $categories = get_categories();
+        include('view/category_list.php');
+        break;
 
 
-//Delete Todo
-if(isset($_GET['del_task'])) {
-    $ItemNum = $_GET['del_task'];
-    mysqli_query($db, "DELETE FROM todoitems WHERE ItemNum=$ItemNum");
-    header('location: index.php');
+    case add_category()($category_name);
+        header("location: .?action=list_categories");
+        break;
+
+    case "add_items":
+        if ($category_id && $description) {
+            add_items($category_id, $description);
+            header("location: .?category_id=$category_id");
+
+        } else {
+            $error = "Invalid item. Check all fields and try again";
+            include('view/error.php');
+            exit();
+        }
+        break;
+
+    case "delete_category":
+        if ($category_id) {
+            try {
+                delete_category($category_id);
+            } catch (PDOException $e) {
+                $error = "You cannot delete a category if items exist in the course.";
+                include('view/error.php');
+                exit();
+            }
+            header("location: .?action=list_categories");
+        }
+        break;
+
+    case "delete_items":
+        if ($item_id) {
+            delete_items($item_id);
+            header("location: .?category_id=$category_id");
+        } else {
+            $error = "Missing or incorrect item id";
+            include('view/error.php');
+        }
+        break;
+
+    default:
+        $category_name = get_category_name($category_id);
+        $categories = get_categories();
+        $items = get_items_by_category($category_id);
+        include('view/item_list.php');
 }
 
-$todoitems = mysqli_query($db, "SELECT * FROM todoitems")
-
-?>
-
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Do List</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-
-<body>
-    <div class="heading">
-        <h2>Todo List</h2>
-    </div>
-
-
-
-    <table>
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>ToDo</th>
-                <th>Description</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-   
-        <!-- Display Todo onto page after submit -->
-        <?php
-            $num = 1;
-                if($num) {
-                $message = 'No Todos items posted yet';
-                 }
-                while($row = mysqli_fetch_array($todoitems)) { ?>
-            <tr>
-                <td><?php echo $num; ?></td>
-                <td><?php echo $row['Title']; ?></td>
-                <td class="task"><?php echo $row['Description']; ?></td>
-                <td class="delete">
-                   <button class="delete_btn"> <a href="index.php?del_task=<?php echo $row['ItemNum']; ?>">Delete</a></button>
-                </td>
-
-            </tr>
-          <?php  $num++; } ?>
-            
-
-        </tbody>
-    </table>
-        <form method=POST action="index.php">
-        <h1 class="form-heading"> <b>Enter Your ToDos:</b></h1><br>
-    <?php if (isset($errors)) { ?>
-            <p><?php echo $errors; ?></p>
-    <?php }
-    ?>
-        <input type="text" name="Title" class="task_input" placeholder="Enter Your Task"><br><br>
-        <input type="text" name="Description" class="task_input" placeholder="Task Description">
-        <button type="submit" class="add_btn" name="submit">Add ToDo</button>
-
-
-    </form>
-</body>
-
-</html>

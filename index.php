@@ -8,11 +8,11 @@ require('model/category_db.php');
 
 $category_name = filter_input(INPUT_POST, "category_name", FILTER_SANITIZE_STRING);
 $description = filter_input(INPUT_POST, "description", FILTER_SANITIZE_STRING);
-$item_id =filter_input(INPUT_POST, 'item_id', FILTER_VALIDATE_INT);
+$item_id = filter_input(INPUT_POST, 'item_id', FILTER_VALIDATE_INT);
 //$items = filter_input(INPUT_POST, "title", FILTER_SANITIZE_STRING);
 
 $category_id = filter_input(INPUT_POST, 'category_id', FILTER_VALIDATE_INT);
-if($category_id) {
+if ($category_id) {
     $category_id = filter_input(INPUT_GET, 'category_id', FILTER_VALIDATE_INT);
 }
 
@@ -34,7 +34,7 @@ switch ($action) {
         break;
 
 
-    case add_category()($category_name);
+    case add_category($category_name);
         header("location: .?action=list_categories");
         break;
 
@@ -42,7 +42,6 @@ switch ($action) {
         if ($category_id && $description) {
             add_items($category_id, $description);
             header("location: .?category_id=$category_id");
-
         } else {
             $error = "Invalid item. Check all fields and try again";
             include('view/error.php');
@@ -79,4 +78,3 @@ switch ($action) {
         $items = get_items_by_category($category_id);
         include('view/item_list.php');
 }
-

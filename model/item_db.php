@@ -5,13 +5,13 @@ function get_items_by_category($category_id)
 {
     global $db;
     if ($category_id) {
-    $query = 'SELECT I.ItemNum, I.Description, C.CategoryName FROM todoitems I LEFT JOIN
-                category C ON I.CategoryID = C.CategoryID 
-                WHERE I.CategoryID = :category_id ORDER BY I.ItemNum';
+    $query = 'SELECT I.itemNum, I.description, C.categoryName FROM todoitems I LEFT JOIN
+                category C ON I.categoryID = C.categoryID 
+                WHERE I.categoryID = :category_id ORDER BY I.itemNum';
                 } else {
-        'SELECT I.ItemNum, I.Description, C.CategoryName FROM todoitems I LEFT JOIN
-                category C ON I.CategoryID = C.CategoryID 
-                 ORDER BY C.CategoryID';
+        'SELECT I.itemNum, I.description, C.categoryName FROM todoitems I LEFT JOIN
+                category C ON I.categoryID = C.categoryID 
+                 ORDER BY C.categoryID';
     }
 
 
@@ -41,12 +41,12 @@ function add_items($category_id, $description)
     global $db;
 
     $query = 'INSERT INTO todoitems
-                 (Description, CategoryID)
+                 (Description, categoryID)
               VALUES
-                 (:Description, :CategoryID)';
+                 (:Description, :categoryID)';
     $statement = $db->prepare($query);
-    $statement->bindValue(":Description", $description);
-    $statement->bindValue(":CategoryID", $category_id);
+    $statement->bindValue(":description", $description);
+    $statement->bindValue(":categoryID", $category_id);
     $statement->execute();
     $statement->closeCursor();
 }

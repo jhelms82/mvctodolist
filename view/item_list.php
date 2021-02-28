@@ -16,49 +16,55 @@ require('../model/database.php'); ?>
             <input type="hidden" name="action" value="list_items">
             <select name="category_id" required>
                 <option value="0"> View All</option>
-                <?php foreach ($categories as $category) : ?>
-                    <?php if ($category_id == $category['CategoryID']) { ?>
-                        <option value="<? $category['CategoryID' ?>" selected>
-                        <?php } else { ?>
-                        <option value="<?= $category['CategoryID'] ?>">
-                        <?php } ?>
-                        <?= $category['CategoryName'] ?>
-                        </option>
-                    <?php endforeach; ?>
+                <?php if (isset($categories)) {
+                    foreach ($categories as $category) : ?>
+                        <?php if (isset($category_id)) {
+                            if ($category_id == $category['categoryID']) { ?>
+                                <option value="<? $category['categoryID'] ?>" selected>
+                                <?php } else { ?>
+                                <option value="<?= $category['categoryID'] ?>">
+                                <?php }
+                        } ?>
+                            <?= $category['categoryName'] ?>
+                            </option>
+                        <?php endforeach;
+                } ?>
 
 
             </select>
             <button class="add-button bold">Go</button>
         </form>
     </header>
-    <?php if ($items) { ?>
-        <?php foreach ($items as $item) : ?>
-            <div class="list_row">
-                <div class="list_item">
-                    <p class="bold"><?= $item['CategoryName'] ?></p>
-                    <p><?= $item['Description'] ?></p>
+    <?php if (isset($items)) {
+       if ($items) { ?>
+            <?php foreach ($items as $item) : ?>
+                <div class="list_row">
+                    <div class="list_item">
+                        <p class="bold"><?= $item['categoryName'] ?></p>
+                        <p><?= $item['description'] ?></p>
+                    </div>
+                    <div class="list_removeItem">
+                        <form action="." method="post">
+                            <input type="hidden" name="action" value="delete_item">
+                            <input type="hidden" name="category_id" value="<?=
+                                                                            $item['itemNum'] ?>">
+                            <button class="remove_button">Delete</button>
+                        </form>
+                    </div>
                 </div>
-                <div class="list_removeItem">
-                    <form action="." method="post">
-                        <input type="hidden" name="action" value="delete_item">
-                        <input type="hidden" name="category_id" value="<?=
-                                                                        $item['ItemNum'] ?>">
-                        <button class="remove_button">Delete</button>
-                    </form>
                 </div>
-            </div>
-            </div>
-        <?php endforeach; ?>
-    <?php } else { ?>
-        <br>
-        <?php if ($category_id) { ?>
-            <p>No to do items for this category</p>
+            <?php endforeach; ?>
         <?php } else { ?>
-            <p>No to do items exist yet.</p>
+            <br>
+            <?php if ($category_id) { ?>
+                <p>No to do items for this category</p>
+            <?php } else { ?>
+                <p>No to do items exist yet.</p>
 
-        <?php  } ?>
-        <br>
-    <?php } ?>
+            <?php  } ?>
+            <br>
+        <?php }
+    } ?>
     }
 </section>
 
@@ -71,14 +77,14 @@ require('../model/database.php'); ?>
             <select name="category_id" required>
                 <option value="">Please Select</option>
                 <?php foreach ($categories as $category) : ?>
-                    <option value="<?= $category['CategoryID']; ?>">
-                        <?= $category['CategoryName']; ?>
+                    <option value="<?= $category['categoryID']; ?>">
+                        <?= $category['categoryName']; ?>
                     </option>
                 <?php endforeach; ?>
 
             </select>
             <label>Description:</label>
-            <input type="text" name="Description" maxlength="120" placeholder="Description" required>
+            <input type="text" name="description" maxlength="120" placeholder="Description" required>
         </div>
         <div class="add_addItem">
             <button class="add-button bold">Add</button>
@@ -87,7 +93,7 @@ require('../model/database.php'); ?>
 </section>
 <br>
 
-<p><a href=".?action=list_categories">View/Edit Categories</a> </p>
+<p><a href=".">View/Edit Categories</a> </p>
 
 
 <?php include '../view/footer.php'; ?>

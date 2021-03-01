@@ -17,7 +17,7 @@
                         <form action="." method="post">
                             <input type="hidden" name="action" value="delete_category">
                             <input type="hidden" name="category_id" value="<?= $category['categoryID'] ?>">
-                            <button class="remove-button">X</button>
+                            <button class="remove-button">Delete
                         </form>
                     </div>
                 </div>
@@ -39,13 +39,13 @@
             <input type="text" name="title" maxlength="50" placeholder="Name" autofocus required>
         </div>
         <div class="add_addItem">
-            <button class="add-button bold">Add</button>
+            <button href=".?action=add_categories"class="add-button bold">Add</button>
         </div>
     </form>
 
 </section>
 <br>
-<p><a href=".">View &amp; Add Categories</a> </p>
+<p><a href=".?action=list_categories">View &amp; Add Categories</a> </p>
 
 
 

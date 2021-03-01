@@ -1,6 +1,6 @@
-<?php include('../view/header.php');; ?>
+<?php include('header.php'); ?>
 <?php
-require('../model/database.php'); ?>
+//require('model/database.php'); ?>
 <?php
 
 
@@ -12,7 +12,7 @@ require('../model/database.php'); ?>
 <section id="list" class="list">
     <header class="list_row list_header">
         <h1>To Do's</h1>
-        <form action="." method="get" id="list_header_select" class="list_header_select">
+        <form action="?action=view_items" method="get" id="list_header_select" class="list_header_select">
             <input type="hidden" name="action" value="list_items">
             <select name="category_id" required>
                 <option value="0"> View All</option>
@@ -64,7 +64,7 @@ require('../model/database.php'); ?>
             <?php  } ?>
             <br>
         <?php }
-    } ?>
+} ?>
     }
 </section>
 
@@ -93,7 +93,7 @@ require('../model/database.php'); ?>
 </section>
 <br>
 
-<p><a href=".">View/Edit Categories</a> </p>
+<p><a href="?action=list_categories">View/Edit Categories</a> </p>
 
 
-<?php include '../view/footer.php'; ?>
+<?php include("footer.php"); ?>

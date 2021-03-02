@@ -6,7 +6,7 @@ require('model/category_db.php');
 
 
 
-$category_name = filter_input(INPUT_POST, "category_name", FILTER_SANITIZE_STRING);
+$category_name = filter_input(INPUT_POST, "title", FILTER_SANITIZE_STRING);
 $description = filter_input(INPUT_POST, "description", FILTER_SANITIZE_STRING);
 $item_id = filter_input(INPUT_POST, 'item_id', FILTER_VALIDATE_INT);
 //$items = filter_input(INPUT_POST, "title", FILTER_SANITIZE_STRING);
@@ -29,12 +29,16 @@ if (!$action) {
 
 switch ($action) {
     case 'list_categories':
-        $categories = get_categories ();
-        add_category($category_name);
+        $categories = get_categories();
         include ('view/category_list.php');
 
         break;
 
+    case 'list_items':
+        $categories = get_categories();
+        include ('view/item_list.php');
+
+        break;
 
 
 
@@ -71,7 +75,7 @@ switch ($action) {
     case "delete_items":
         if ($item_id) {
             delete_items($item_id);
-            header("location: .?category_id=$category_id");
+            header("location: ?action=list_items");
         } else {
             $error = "Missing or incorrect item id";
             include('view/error.php');

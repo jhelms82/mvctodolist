@@ -1,5 +1,7 @@
-<?php include 'header.php'; ?>
+<?php include 'header.php';
+//include '../model/category_db.php';
 
+?>
 <?php if (isset($categories)) {
     if ($categories) { ?>
         <section id="list" class="list">
@@ -8,7 +10,8 @@
             </header>
 
 
-            <?php foreach ($categories as $category) : ?>
+            <?php foreach ($categories as $category) :
+                ?>
                 <div class="list_row">
                     <div class="list_item">
                         <p class="bold"><?= $category['categoryName'] ?></p>
@@ -16,8 +19,8 @@
                     <div class="list_removeItem">
                         <form action="." method="post">
                             <input type="hidden" name="action" value="delete_category">
-                            <input type="hidden" name="category_id" value="<?= $category['categoryID'] ?>">
-                            <button class="remove-button">Delete
+                            <input type="hidden" name="category_id" value="<?=  $category['categoryID'] ?>">
+                            <button class="remove-button">Delete</button>
                         </form>
                     </div>
                 </div>
@@ -45,7 +48,7 @@
 
 </section>
 <br>
-<p><a href=".?action=list_categories">View &amp; Add Categories</a> </p>
+<p><a href="../view/item_list.php">View &amp; Add Items</a> </p>
 
 
 

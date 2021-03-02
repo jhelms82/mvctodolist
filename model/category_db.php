@@ -1,4 +1,6 @@
 <?php
+
+
 function get_categories()
 {
     global $db;
@@ -52,4 +54,3 @@ function delete_category($category_id)
     $statement->execute();
     $statement->closeCursor();
 }
-?>
